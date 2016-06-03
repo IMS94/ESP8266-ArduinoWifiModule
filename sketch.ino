@@ -17,6 +17,8 @@ void loop(){
   if(Serial1.available()){
     String message=Serial1.readStringUntil('\n');
     Serial.println(message);
+    String command=extract(message);
+    process(command);
   }
 }
 
@@ -30,7 +32,7 @@ void sendSetupCommand(String command){
     msg=receiveData();
   }while(msg.indexOf("OK")==-1);
   Serial.println(msg);
-  delay(2000);
+  delay(3000);
 }
 
 //receive data
@@ -41,4 +43,40 @@ String receiveData(){
       response+=Serial1.readStringUntil('\n');
   }
   return response;
+}
+
+String extract(String message){
+  if(message.indexOf("+IPD")>=0){
+    int start=message.indexOf(':');
+    if(start<0){
+      return "";
+    }
+    String cmd= message.substring(start+1);
+    Serial.println(cmd);
+    return cmd;
+  }
+  return "";
+}
+
+//process the received command
+void process(String s){
+  if(s=="") return;
+  for(int i=0; i<s.length(); i++)
+  {
+    if(s[i] == 'f'){
+    
+    }
+    else if(s[i] == 'b'){
+    
+    }
+    else if(s[i] == 's'){
+    
+    }
+    else if(s[i] == 'l'){
+    
+    }
+    else if(s[i] == 'r'){
+    
+    }  
+  }
 }
